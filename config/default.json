@@ -7,12 +7,17 @@
 
   "udpClientLogger": {
     "level": "warn",
-    "prefix": "{blue:[}{magenta:udp-multicast-client}{blue:] }",
+    "prefix": "{blue:[}{green:udp-multicast-client}{blue:] }",
     "useLevelPrefixes": true
   },
 
   "indexLogger": {
     "level": "warn",
     "prefix": "{blue:[}{green:dcs-bios-parser}{blue:] }"
+  },
+
+  "dcsBiosJsonParserLogger": {
+    "level": "warn",
+    "prefix": "{blue:[}{green:dcs-bios-json-parser}{blue:] }"
   }
 }
