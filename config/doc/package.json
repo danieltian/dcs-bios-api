@@ -1,0 +1,32 @@
+{
+  "name": "dcs-bjson",
+  "version": "0.0.1",
+  "description": "DCS BIOS export parser that returns JSON data",
+  "keywords": [
+    "dcs",
+    "world",
+    "bios",
+    "json",
+    "export"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "doc": "esdoc"
+  },
+  "author": "Daniel Tian <dftian@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danieltian/dcs-bjson.git"
+  },
+  "dependencies": {
+    "config": "^1.26.1",
+    "eazy-logger": "^3.0.2",
+    "glob": "^7.1.2",
+    "left-pad": "^1.1.3"
+  },
+  "devDependencies": {
+    "esdoc": "^0.5.2"
+  }
+}

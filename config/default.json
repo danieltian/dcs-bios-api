@@ -1,0 +1,18 @@
+{
+  "udpClient": {
+    "receivePort": 5010,
+    "sendPort": 7778,
+    "multicastAddress": "239.255.50.10"
+  },
+
+  "udpClientLogger": {
+    "level": "warn",
+    "prefix": "{blue:[}{magenta:udp-multicast-client}{blue:] }",
+    "useLevelPrefixes": true
+  },
+
+  "indexLogger": {
+    "level": "warn",
+    "prefix": "{blue:[}{green:dcs-bios-parser}{blue:] }"
+  }
+}
