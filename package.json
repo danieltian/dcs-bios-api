@@ -9,9 +9,9 @@
     "json",
     "export"
   ],
-  "main": "index.js",
+  "main": "./lib/dcs-bios-export-parser.js",
   "scripts": {
-    "start": "node index",
+    "start": "node index.js",
     "lint": "eslint ."
   },
   "author": "Daniel Tian <dftian@gmail.com>",
