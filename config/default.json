@@ -5,19 +5,18 @@
     "multicastAddress": "239.255.50.10"
   },
 
-  "udpClientLogger": {
+  "udpMulticastClientLogger": {
     "level": "warn",
-    "prefix": "{blue:[}{green:udp-multicast-client}{blue:] }",
-    "useLevelPrefixes": true
+    "prefix": "{blue:[}{magenta:udp-multicast-client}{blue:] }",
   },
 
   "indexLogger": {
     "level": "warn",
-    "prefix": "{blue:[}{green:dcs-bios-parser}{blue:] }"
+    "prefix": "{blue:[}{magenta:dcs-bios-parser}{blue:] }"
   },
 
   "dcsBiosJsonParserLogger": {
     "level": "warn",
-    "prefix": "{blue:[}{green:dcs-bios-json-parser}{blue:] }"
+    "prefix": "{blue:[}{magenta:dcs-bios-json-parser}{blue:] }"
   }
 }

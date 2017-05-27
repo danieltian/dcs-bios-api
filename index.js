@@ -1,9 +1,7 @@
-const dgram = require('dgram');
-const fs = require('fs');
 const config = require('config');
 const EventEmitter = require('events');
 const BufferReader = require('./lib/buffer-reader');
-const DcsBiosJsonParser = require('./lib/dcs-bios-json-parser');
+const jsonParser = require('./lib/dcs-bios-json-parser');
 const UdpClient = require('./lib/udp-multicast-client');
 const logger = require('eazy-logger').Logger(config.get('indexLogger'));
 const glob = require('glob');
@@ -16,10 +14,9 @@ class DcsBiosParser extends EventEmitter {
     this.client.start();
 
     var files = glob.sync(path.resolve('./json/*.json'));
-    var parser = new DcsBiosJsonParser();
     this.aircraftJson = {};
     this.addressLookup = {};
-    parser.parseFiles(files, this.aircraftJson, this.addressLookup);
+    jsonParser.parseFiles(files, this.aircraftJson, this.addressLookup);
 
     this.data = Buffer.alloc(65536);
     this.emitQueue = [];
