@@ -21,9 +21,9 @@
     "url": "git@github.com:danieltian/dcs-bjson.git"
   },
   "dependencies": {
-    "config": "^1.26.1",
-    "eazy-logger": "^3.0.2",
-    "glob": "^7.1.2"
+    "buffer-utils": "^1.0.1",
+    "glob": "^7.1.2",
+    "logplease": "^1.2.13"
   },
   "devDependencies": {
     "eslint": "^3.19.0"

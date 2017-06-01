@@ -1,9 +1,9 @@
 const DcsBiosExportParser = require('./lib/dcs-bios-export-parser');
-const logger = require('./lib/logger');
+const log = require('./lib/logger');
 
-var parser = new DcsBiosExportParser({ logLevel: 'warn' });
+var parser = new DcsBiosExportParser({ logLevel: 'INFO' });
 parser.startListening();
 
-parser.on('MetadataStart/_ACFT_NAME', (value) => {
-  logger.info(`aircraft name: '${value}'`);
+parser.on('_ACFT_NAME', (value) => {
+  log.info('aircraft name:', value);
 });
