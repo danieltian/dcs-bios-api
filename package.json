@@ -1,6 +1,6 @@
 {
   "name": "dcs-bjson",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "DCS BIOS export parser that returns JSON data",
   "keywords": [
     "dcs",
