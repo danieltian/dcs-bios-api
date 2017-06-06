@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Ka-50 Controls</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>window.docdata = {};</script>
+  <script src="json/A-10C.jsonp"></script>
+  <script src="json/CommonData.jsonp"></script>
+  <script src="json/Ka-50.jsonp"></script>
+  <script src="json/MetadataEnd.jsonp"></script>
+  <script src="json/MetadataStart.jsonp"></script>
+  <script src="json/MiG-21Bis.jsonp"></script>
+  <script src="json/UH-1H.jsonp"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ui icon input">
+      <input type="text" placeholder="Filter" v-model.trim="filter">
+      <i class="search icon"></i>
+    </div>
+
+    <template v-for="(aircraftValue, aircraftKey) in filteredData">
+      <div>
+        <h1>{{ aircraftKey }}</h1>
+
+        <template v-for="(categoryValue, categoryKey) in aircraftValue">
+          <h3>{{ categoryKey }}</h3>
+
+          <template v-for="(controlValue, controlKey) in categoryValue">
+            <div>{{ controlValue.identifier }} - {{ controlValue.description }}</div>
+          </template>
+        </template>
+      </div>
+  </template>
+
+  <script>
+    var data = docdata['Ka-50'];
+
+    var flattenedData = Object.values(data).reduce((array, item) => {
+      Array.prototype.push.apply(array, Object.values(item));
+      return array;
+    }, []);
+
+    var idLookup = {};
+
+    flattenedData.forEach((item) => {
+      item.outputs.forEach((output) => {
+        if (!idLookup[output.address]) {
+          idLookup[output.address] = [];
+        }
+
+        idLookup[output.address].push(item);
+      });
+    });
+
+    function lookup(id, binaryString) {
+      var number = parseInt(binaryString, 2);
+
+      idLookup[id].forEach((item) => {
+        item.outputs.forEach((output) => {
+          var value = (number & output.mask) >> output.shift_by;
+          console.log(`${item.category} - ${item.description}: ${value}`);
+        });
+      });
+    }
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        filter: ''
+      },
+      computed: {
+        filteredData: function() {
+          var filter = this.filter.toLowerCase();
+          var data = JSON.parse(JSON.stringify(docdata));
+
+          Object.keys(data).forEach((aircraft) => {
+            Object.keys(data[aircraft]).forEach((category) => {
+              Object.keys(data[aircraft][category]).forEach((controlName) => {
+                var control = data[aircraft][category][controlName];
+
+                if (!(control.identifier.toLowerCase().includes(filter) || (control.description || '').toLowerCase().includes(filter))) {
+                  delete data[aircraft][category][controlName];
+                }
+              });
+
+              if (!Object.keys(data[aircraft][category]).length) {
+                delete data[aircraft][category];
+              }
+            });
+
+            if (!Object.keys(data[aircraft]).length) {
+              delete data[aircraft];
+            }
+          });
+
+          return data;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
