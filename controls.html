@@ -7,7 +7,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
   <script>window.docdata = {};</script>
   <script src="json/A-10C.jsonp"></script>
@@ -17,13 +16,79 @@
   <script src="json/MetadataStart.jsonp"></script>
   <script src="json/MiG-21Bis.jsonp"></script>
   <script src="json/UH-1H.jsonp"></script>
+
+  <style>
+    body {
+      font-family: 'Lato', sans-serif;
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAALElEQVQYV2NkwAI+fPjwnxFdHCQoICDAiCIBEwQphksgC8Il0AXBEtgEQRIA7qsX1lejMGMAAAAASUVORK5CYII=);
+    }
+
+    #app {
+      margin-bottom: 100px;
+    }
+
+    .ui.menu {
+      border-radius: 0;
+    }
+
+    .ui.menu .header.item {
+      font-size: 1.4em;
+      letter-spacing: 0.03em;
+    }
+
+    .ui.menu .header.item::before {
+      content: initial;
+    }
+
+    .category {
+      text-transform: uppercase;
+    }
+
+    .ui.ribbon.label {
+      text-transform: uppercase;
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+    }
+
+    .control-name {
+      flex: 1;
+    }
+
+    .control-description {
+      font-weight: bold;
+      font-size: 1.5em;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.2em;
+      color: #004777;
+      text-transform: uppercase;
+    }
+
+    .control-identifier {
+      color: #8BABC1;
+    }
+
+    .inputs {
+      margin-bottom: 6px;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app">
+  <div class="ui inverted menu">
+    <div class="ui container">
+      <div class="header item">DCS BIOS CONTROLS</div>
+    </div>
+  </div>
+
+  <div id="app" class="ui container">
+    <!-- <button v-for="aircraft in aircraftList" class="ui toggle button">{{ aircraft }}</button> -->
+
     <div class="ui icon input">
-      <input type="text" placeholder="Filter" v-model.trim="filter">
-      <i class="search icon"></i>
+      <input v-model.trim="filter" type="text" placeholder="Filter">
+      <i v-on:click="onFilterIconClick" v-bind:class="filterIcon" class="link icon"></i>
     </div>
 
     <template v-for="(aircraftValue, aircraftKey) in filteredData">
@@ -31,71 +96,101 @@
         <h1>{{ aircraftKey }}</h1>
 
         <template v-for="(categoryValue, categoryKey) in aircraftValue">
-          <h3>{{ categoryKey }}</h3>
+          <h2 class="category">{{ categoryKey }}</h2>
 
-          <template v-for="(controlValue, controlKey) in categoryValue">
-            <div>{{ controlValue.identifier }} - {{ controlValue.description }}</div>
-          </template>
+            <template v-for="(controlValue, controlKey) in categoryValue">
+              <div class="ui segment control">
+                <div v-bind:class="getRibbonColor(controlValue.control_type)" class="ui ribbon label">{{ controlTypeNormalize(controlValue.control_type) }}</div>
+                <div class="control-name">
+                  <div class="control-description">{{ controlValue.description }}</div>
+                  <div class="control-identifier">{{ controlValue.identifier }}</div>
+                </div>
+                <div class="inputs-outputs">
+                  <div class="inputs">
+                    Inputs:
+                    <button v-for="input in controlValue.inputs" class="ui mini compact button">{{ input.interface }}</button>
+                  </div>
+                  <div class="outputs">
+                    Outputs:
+                    <button v-for="output in controlValue.outputs" class="ui mini compact button">{{ output.description }} (max: {{ output.max_value }})</button>
+                  </div>
+                </div>
+              </div>
+            </template>
         </template>
       </div>
   </template>
 
   <script>
-    var data = docdata['Ka-50'];
-
-    var flattenedData = Object.values(data).reduce((array, item) => {
-      Array.prototype.push.apply(array, Object.values(item));
-      return array;
-    }, []);
-
-    var idLookup = {};
-
-    flattenedData.forEach((item) => {
-      item.outputs.forEach((output) => {
-        if (!idLookup[output.address]) {
-          idLookup[output.address] = [];
-        }
-
-        idLookup[output.address].push(item);
-      });
-    });
-
-    function lookup(id, binaryString) {
-      var number = parseInt(binaryString, 2);
-
-      idLookup[id].forEach((item) => {
-        item.outputs.forEach((output) => {
-          var value = (number & output.mask) >> output.shift_by;
-          console.log(`${item.category} - ${item.description}: ${value}`);
-        });
-      });
-    }
-
     var app = new Vue({
       el: '#app',
+
       data: {
         filter: ''
       },
+
+      methods: {
+        onFilterIconClick: function() {
+          if (this.filter) {
+            this.filter = '';
+          }
+        },
+
+        getRibbonColor: function(controlType) {
+          switch (controlType) {
+            case 'selector':
+              return 'blue';
+            case 'analog_gauge':
+              return 'orange';
+            case 'limited_dial':
+              return 'olive';
+            case 'display':
+              return 'pink';
+            case 'led':
+              return 'teal';
+            default:
+              return 'grey';
+          }
+        },
+
+        controlTypeNormalize: function(controlType) {
+          return controlType.replace(/_/g, ' ');
+        }
+      },
+
       computed: {
+        filterIcon: function() {
+          return this.filter ? 'remove' : 'search';
+        },
+
+        aircraftList: function() {
+          return Object.keys(docdata);
+        },
+
         filteredData: function() {
           var filter = this.filter.toLowerCase();
+          // Deep clone the original data.
           var data = JSON.parse(JSON.stringify(docdata));
 
+          // Filter the data by removing entries that don't match the filter. We want to keep the same tree structure.
           Object.keys(data).forEach((aircraft) => {
             Object.keys(data[aircraft]).forEach((category) => {
               Object.keys(data[aircraft][category]).forEach((controlName) => {
                 var control = data[aircraft][category][controlName];
 
+                // Match on the identifier and description fields.
                 if (!(control.identifier.toLowerCase().includes(filter) || (control.description || '').toLowerCase().includes(filter))) {
                   delete data[aircraft][category][controlName];
                 }
               });
 
+              // Delete the category altogether if all the controls were filtered out.
               if (!Object.keys(data[aircraft][category]).length) {
                 delete data[aircraft][category];
               }
             });
 
+            // Delete the aircraft altogether if all the categories were filtered out.
             if (!Object.keys(data[aircraft]).length) {
               delete data[aircraft];
             }
