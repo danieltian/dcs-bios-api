@@ -59,15 +59,19 @@
 
     .control-description {
       font-weight: bold;
-      font-size: 1.5em;
+      font-size: 1.3em;
       letter-spacing: 0.02em;
-      margin-bottom: 0.2em;
       color: #004777;
       text-transform: uppercase;
     }
 
     .control-identifier {
       color: #8BABC1;
+      font-size: 0.9em;
+    }
+
+    .inputs-outputs {
+      display: flex;
     }
 
     .inputs {
@@ -98,25 +102,25 @@
         <template v-for="(categoryValue, categoryKey) in aircraftValue">
           <h2 class="category">{{ categoryKey }}</h2>
 
-            <template v-for="(controlValue, controlKey) in categoryValue">
-              <div class="ui segment control">
-                <div v-bind:class="getRibbonColor(controlValue.control_type)" class="ui ribbon label">{{ controlTypeNormalize(controlValue.control_type) }}</div>
-                <div class="control-name">
-                  <div class="control-description">{{ controlValue.description }}</div>
-                  <div class="control-identifier">{{ controlValue.identifier }}</div>
+          <template v-for="(controlValue, controlKey) in categoryValue">
+            <div class="ui segment control">
+              <div v-bind:class="getRibbonColor(controlValue.control_type)" class="ui ribbon label">{{ controlTypeNormalize(controlValue.control_type) }}</div>
+              <div class="control-name">
+                <div class="control-description">{{ controlValue.description }}</div>
+                <div class="control-identifier">{{ controlValue.identifier }}</div>
+              </div>
+              <div class="inputs-outputs">
+                <div class="inputs">
+                  Inputs:
+                  <button v-for="input in controlValue.inputs" class="ui mini compact button">{{ input.interface }}</button>
                 </div>
-                <div class="inputs-outputs">
-                  <div class="inputs">
-                    Inputs:
-                    <button v-for="input in controlValue.inputs" class="ui mini compact button">{{ input.interface }}</button>
-                  </div>
-                  <div class="outputs">
-                    Outputs:
-                    <button v-for="output in controlValue.outputs" class="ui mini compact button">{{ output.description }} (max: {{ output.max_value }})</button>
-                  </div>
+                <div class="outputs">
+                  Outputs:
+                  <button v-for="output in controlValue.outputs" class="ui mini compact button">{{ output.description }} (max: {{ output.max_value }})</button>
                 </div>
               </div>
-            </template>
+            </div>
+          </template>
         </template>
       </div>
   </template>
