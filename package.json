@@ -1,6 +1,6 @@
 {
   "name": "dcs-bios-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "DCS BIOS export parser that returns JSON data",
   "keywords": [
     "dcs",
