@@ -1,5 +1,5 @@
 {
-  "name": "dcs-bjson",
+  "name": "dcs-bios-api",
   "version": "0.0.2",
   "description": "DCS BIOS export parser that returns JSON data",
   "keywords": [
@@ -18,7 +18,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:danieltian/dcs-bjson.git"
+    "url": "git@github.com:danieltian/dcs-bios-api.git"
   },
   "dependencies": {
     "buffer-utils": "^1.0.1",
