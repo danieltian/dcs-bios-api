@@ -40,6 +40,10 @@
       content: initial;
     }
 
+    .ui.segment.aircraft-name {
+      margin-top: 50px;
+    }
+
     .category {
       text-transform: uppercase;
     }
@@ -97,7 +101,9 @@
 
     <template v-for="(aircraftValue, aircraftKey) in filteredData">
       <div>
-        <h1>{{ aircraftKey }}</h1>
+        <div class="ui inverted segment aircraft-name">
+          <h1 class="ui inverted header">{{ aircraftKey }}</h1>
+        </div>
 
         <template v-for="(categoryValue, categoryKey) in aircraftValue">
           <h2 class="category">{{ categoryKey }}</h2>
@@ -176,14 +182,17 @@
           // Deep clone the original data.
           var data = JSON.parse(JSON.stringify(docdata));
 
-          // Filter the data by removing entries that don't match the filter. We want to keep the same tree structure.
+          // Filter the data by removing entries that don't match the filter, while keeping the same tree structure.
           Object.keys(data).forEach((aircraft) => {
             Object.keys(data[aircraft]).forEach((category) => {
               Object.keys(data[aircraft][category]).forEach((controlName) => {
                 var control = data[aircraft][category][controlName];
+                var categoryMatches = category.toLowerCase().includes(filter);
+                var identifierMatches = control.identifier.toLowerCase().includes(filter);
+                var descriptionMatches = (control.description || '').toLowerCase().includes(filter);
 
                 // Match on the identifier and description fields.
-                if (!(control.identifier.toLowerCase().includes(filter) || (control.description || '').toLowerCase().includes(filter))) {
+                if (!(categoryMatches || identifierMatches || descriptionMatches)) {
                   delete data[aircraft][category][controlName];
                 }
               });
