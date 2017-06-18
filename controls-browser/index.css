@@ -1,0 +1,101 @@
+body {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAALElEQVQYV2NkwAI+fPjwnxFdHCQoICDAiCIBEwQphksgC8Il0AXBEtgEQRIA7qsX1lejMGMAAAAASUVORK5CYII=);
+}
+
+#app {
+  display: flex;
+  height: 100%;
+}
+
+#sidebar {
+  background-color: rgb(27, 28, 29);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 20px 30px 20px 20px;
+}
+
+.page-title {
+  white-space: nowrap;
+}
+
+#main {
+  padding: 40px;
+  overflow: auto;
+  padding-bottom: 150px;
+  flex: 1;
+}
+
+.header {
+  font-size: 1.4em;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  margin-bottom: 40px;
+}
+
+.filter {
+  margin-bottom: 30px;
+}
+
+.aircraft-selector {
+  margin-bottom: 15px;
+}
+
+.field {
+  cursor: pointer;
+}
+
+.field:hover .ui.toggle.checkbox label, .field:hover .ui.toggle.checkbox input:checked~label {
+  color: #2187d0 !important;
+}
+
+.ui.toggle.checkbox label {
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+}
+
+.ui.toggle.checkbox input:checked~label {
+  color: rgba(255, 255, 255, 0.9) !important;
+  cursor: pointer;
+}
+
+.category {
+  margin-bottom: 50px;
+}
+
+.category-name {
+  text-transform: uppercase;
+}
+
+.ui.ribbon.label {
+  text-transform: uppercase;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+}
+
+.control-name {
+  flex: 1;
+}
+
+.control-description {
+  font-weight: bold;
+  font-size: 1.3em;
+  letter-spacing: 0.02em;
+  color: #004777;
+  text-transform: uppercase;
+}
+
+.control-identifier {
+  color: #8BABC1;
+  font-size: 0.9em;
+}
+
+.inputs-outputs {
+  display: flex;
+}
+
+.inputs {
+  margin-bottom: 6px;
+}

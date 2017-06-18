@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<head>
+  <title>DCS BIOS Controls</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.js"></script>
+
+  <!-- Load each aircraft's data -->
+  <script>window.docdata = {};</script>
+  <script src="../json/A-10C.jsonp"></script>
+  <script src="../json/CommonData.jsonp"></script>
+  <script src="../json/Ka-50.jsonp"></script>
+  <script src="../json/MetadataEnd.jsonp"></script>
+  <script src="../json/MetadataStart.jsonp"></script>
+  <script src="../json/MiG-21Bis.jsonp"></script>
+  <script src="../json/UH-1H.jsonp"></script>
+
+  <script src="index.js" defer async></script>
+</head>
+
+<body>
+  <!-- Aircraft control template -->
+  <script type="text/x-template" id="aircraft-control">
+    <div class="ui segment control">
+      <div :class="labelColor" class="ui ribbon label">{{ controlType }}</div>
+      <!-- Control description and identifier -->
+      <div class="control-name">
+        <div class="control-description">{{ control.description }}</div>
+        <div class="control-identifier">{{ control.identifier }}</div>
+      </div>
+      <!-- Inputs and outputs -->
+      <div class="inputs-outputs">
+        <div class="inputs">
+          Inputs:
+          <button v-for="input in control.inputs" class="ui mini compact button">{{ input.interface }}</button>
+        </div>
+        <div class="outputs">
+          Outputs:
+          <button v-for="output in control.outputs" class="ui mini compact button">{{ output.description }} (max: {{ output.max_value }})</button>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- Main page content -->
+  <div id="app">
+    <!-- Header at the top of the page -->
+    <div id="sidebar">
+      <div class="header">DCS BIOS CONTROLS</div>
+
+      <!-- Filter search field -->
+      <div class="ui icon input filter">
+        <input v-model.trim="filter" type="text" placeholder="Filter">
+        <i @click="onFilterIconClick" :class="filterIcon" class="link icon"></i>
+      </div>
+
+      <!-- Aircraft selector -->
+      <div class="ui form aircraft-selector">
+        <div class="grouped fields">
+          <div class="field" @click="selectAircraft(aircraftName)" v-for="aircraftName in aircraftNames">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" :checked="isAircraftSelected(aircraftName)"> <label>{{ aircraftName }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#" @click.prevent="selectAllAircraft()">Select All</a>
+    </div>
+
+    <div id="main">
+      <div class="aircraft" v-for="(categories, aircraftName) in aircraftData" v-show="isAircraftSelected(aircraftName) && isAircraftMatch(categories)">
+        <!-- Aircraft category -->
+        <div class="category" v-for="(controls, categoryName) in categories" v-show="isCategoryMatch(controls)">
+          <h2 class="category-name">{{ categoryName }}</h2>
+          <!-- Aircraft control -->
+          <aircraft-control v-for="control in controls" v-show="isControlMatch(control)" :control="control" :key="control.identifier" />
+        </div>
+      </div>
+    </div>
+</body>
+</html>
