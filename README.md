@@ -12,11 +12,11 @@ api.on('SC_MASTER_CAUTION_LED', (value) => {
 }
 
 api.on('ML_MASTER_ARM:1', () => {
-  console.log('Master ARM light is on');
+  console.log('Master arm light is on');
 });
 
 api.on('ML_MASTER_ARM:0', () => {
-  console.log('Master ARM light is off');
+  console.log('Master arm light is off');
 });
 
 api.sendMessage('WEAPONS_MASTER_ARM 1').then(() => {
@@ -25,8 +25,7 @@ api.sendMessage('WEAPONS_MASTER_ARM 1').then(() => {
 ```
 
 ## Controls Browser
-To see a list of controls that DCS BIOS can interact with, checkout the controls browser here: https://danieltian.github.io/dcs-bios-api
-Most, but not all of the controls are exposed. For example, closing the cockpit door is not, and neither are the throttle levers on the Ka-50.
+To see a list of controls that DCS BIOS can interact with, checkout the controls browser here: https://danieltian.github.io/dcs-bios-api. Some controls are not available in DCS BIOS. For example, closing the cockpit door is not, and neither are the throttle levers on the Ka-50.
 
 ## API
 
