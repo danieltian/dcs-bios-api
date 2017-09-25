@@ -9,7 +9,7 @@ var api = new DcsBiosApi({ logLevel: 'INFO' });
 
 api.on('SC_MASTER_CAUTION_LED', (value) => {
   console.log('Master caution LED is', value ? 'on' : 'off');
-}
+});
 
 api.on('ML_MASTER_ARM:1', () => {
   console.log('Master arm light is on');
