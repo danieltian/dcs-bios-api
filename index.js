@@ -1,3 +1,4 @@
+// This file is for testing this library only, and also serves as a coding example for how to this library.
 const DcsBiosExportParser = require('./lib/dcs-bios-export-parser');
 const log = require('./lib/logger');
 
