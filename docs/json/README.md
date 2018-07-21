@@ -1,3 +1,3 @@
-This JSON data was last updated from commit 0f363ca22d3d84c231386599a081a3c7ba18fb5e, made on 2017-05-22.
+This JSON data was last updated from commit 34cc3b911550c4439fac0b3f7d4dddd920b0ca8f, made on 2017-11-04.
 
-https://github.com/dcs-bios/dcs-bios/tree/0f363ca22d3d84c231386599a081a3c7ba18fb5e
+https://github.com/dcs-bios/dcs-bios/tree/34cc3b911550c4439fac0b3f7d4dddd920b0ca8f
