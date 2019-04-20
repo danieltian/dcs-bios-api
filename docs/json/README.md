@@ -1,3 +1,4 @@
-This JSON data was last updated from commit 34cc3b911550c4439fac0b3f7d4dddd920b0ca8f, made on 2017-11-04.
+This JSON data was last updated from commit 7ecf31d7cf5e322dc2644262c38ca9d8fdcbd193, made on 2019-04-19.
 
-https://github.com/dcs-bios/dcs-bios/tree/34cc3b911550c4439fac0b3f7d4dddd920b0ca8f
+https://github.com/DCSFlightpanels/dcs-bios/tree/7ecf31d7cf5e322dc2644262c38ca9d8fdcbd193
+
