@@ -26,6 +26,6 @@
     "logplease": "^1.2.13"
   },
   "devDependencies": {
-    "eslint": "^3.19.0"
+    "eslint": "^4.18.2"
   }
 }
